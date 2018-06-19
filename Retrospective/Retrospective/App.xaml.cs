@@ -1,4 +1,5 @@
 using System;
+using Retrospective.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,7 @@ namespace Retrospective
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+			MainPage = new ItemsPage();
 		}
 
 		protected override void OnStart ()
