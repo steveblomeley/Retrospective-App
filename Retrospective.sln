@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Retrospective.Android", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Retrospective.iOS", "Retrospective\Retrospective.iOS\Retrospective.iOS.csproj", "{58CA4AE2-AF7D-47D3-B353-7C4AE31DDB93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Retrospective", "Retrospective\Retrospective\Retrospective.csproj", "{345206BB-80C3-4344-A615-2201BEA81E7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Retrospective", "Retrospective\Retrospective\Retrospective.csproj", "{345206BB-80C3-4344-A615-2201BEA81E7E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{42240043-C579-4A82-8BA7-786872F3ADE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -136,6 +138,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8D3D67B8-D68F-441C-964B-E9BB780D4C16} = {42240043-C579-4A82-8BA7-786872F3ADE7}
+		{58CA4AE2-AF7D-47D3-B353-7C4AE31DDB93} = {42240043-C579-4A82-8BA7-786872F3ADE7}
+		{345206BB-80C3-4344-A615-2201BEA81E7E} = {42240043-C579-4A82-8BA7-786872F3ADE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B532CF1D-EC9F-4F9E-849B-4BD37909437B}
