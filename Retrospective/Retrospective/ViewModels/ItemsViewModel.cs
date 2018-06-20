@@ -1,32 +1,19 @@
 ﻿using System.Collections.ObjectModel;
 using Retrospective.Models;
+using Retrospective.Navigation;
+using Xamarin.Forms;
 
 namespace Retrospective.ViewModels
 {
     public class ItemsViewModel
     {
         public ObservableCollection<Item> Items { get; }
+        public Command AddNewItemCommand { get; }
 
-        public ItemsViewModel()
+        public ItemsViewModel(IAppNavigation appNavigation)
         {
-
-            Items = new ObservableCollection<Item>()
-            {
-                new Item
-                {
-                    Title = "Writing tests",
-                    Description = "Let's keep writing tests and maintaining good test coverage"
-                },
-                new Item()
-                {
-                    Title = "Has no description"
-                },
-                new Item
-                {
-                    Title = "CI/CD",
-                    Description = "Continuous Integration and Deployment are good - so let's keep doing them"
-                }
-            };
+            Items = new ObservableCollection<Item>();
+            AddNewItemCommand = new Command(async () => await appNavigation.AddNewItem(Items.Add));
         }
     }
 }

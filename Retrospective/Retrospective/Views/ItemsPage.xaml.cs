@@ -1,4 +1,5 @@
-﻿using Retrospective.ViewModels;
+﻿using Retrospective.Navigation;
+using Retrospective.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace Retrospective.Views
 		public ItemsPage ()
 		{
 			InitializeComponent ();
-		    BindingContext = new ItemsViewModel();
+		    BindingContext = new ItemsViewModel(new AppNavigation(Navigation));
 		}
 	}
 }
