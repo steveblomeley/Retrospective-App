@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="ViewModels\AddItemViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ItemsViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
