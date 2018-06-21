@@ -18,7 +18,7 @@ namespace Retrospective.Test.ViewModels
         public void Setup()
         {
             _appNavigation = new Mock<IAppNavigation>();
-            _sut = new ItemsViewModel(_appNavigation.Object);
+            _sut = new ItemsViewModel(_appNavigation.Object, string.Empty);
         }
 
         [Test]

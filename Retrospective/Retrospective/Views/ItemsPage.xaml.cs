@@ -1,5 +1,6 @@
 ﻿using Retrospective.Navigation;
 using Retrospective.ViewModels;
+using Retrospective.XPlatform;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,8 @@ namespace Retrospective.Views
 		public ItemsPage ()
 		{
 			InitializeComponent ();
-		    BindingContext = new ItemsViewModel(new AppNavigation(Navigation));
+		    var dbFilePath = DependencyService.Get<ILocalFilesystem>().GetLocalFilePath("Retrospective-App.db3");
+		    BindingContext = new ItemsViewModel(new AppNavigation(Navigation), dbFilePath);
 		}
 	}
 }

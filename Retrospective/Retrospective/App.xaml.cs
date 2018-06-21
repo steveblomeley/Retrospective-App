@@ -1,5 +1,3 @@
-using System;
-using Retrospective.ViewModels;
 using Retrospective.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
