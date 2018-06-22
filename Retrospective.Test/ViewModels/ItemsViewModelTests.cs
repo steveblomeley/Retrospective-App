@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Moq;
 using NUnit.Framework;
+using Retrospective.Data;
 using Retrospective.Models;
 using Retrospective.Navigation;
 using Retrospective.ViewModels;
@@ -12,13 +13,15 @@ namespace Retrospective.Test.ViewModels
     public class ItemsViewModelTests
     {
         private Mock<IAppNavigation> _appNavigation;
+        private Mock<IRepository> _repository;
         private ItemsViewModel _sut;
 
         [SetUp]
         public void Setup()
         {
             _appNavigation = new Mock<IAppNavigation>();
-            _sut = new ItemsViewModel(_appNavigation.Object, string.Empty);
+            _repository = new Mock<IRepository>();
+            _sut = new ItemsViewModel(_appNavigation.Object, _repository.Object);
         }
 
         [Test]

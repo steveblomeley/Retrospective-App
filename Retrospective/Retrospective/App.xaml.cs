@@ -1,4 +1,6 @@
+using Retrospective.Data;
 using Retrospective.Views;
+using Retrospective.XPlatform;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +13,15 @@ namespace Retrospective
 		{
 			InitializeComponent();
 
-			MainPage = new ItemsPage();
+            //App composition
+            //TODO: Wire in an IoC Container to do this stuff
+            var dbFilePath = DependencyService.Get<ILocalFilesystem>().GetLocalFilePath("Retrospective-App.db3");
+		    var connectionFactory = new SqLiteConnectionFactory(dbFilePath);
+            var repository = new Repository(connectionFactory);
+
+            repository.InitialiseDatabase();
+
+            MainPage = new ItemsPage(repository);
 		}
 
 		protected override void OnStart ()

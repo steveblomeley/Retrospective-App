@@ -1,37 +1,61 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Retrospective.Models;
-using SQLite;
 
 namespace Retrospective.Data
 {
-    public interface IRepository
-    {
-        bool AddItem(Item item, out string errorMsg);
-    }
-
     public class Repository : IRepository
     {
-        private readonly SQLiteConnection _connection;
+        private readonly IConnectionFactory _connFactory;
 
-        public Repository(string dbPath)
+        public Repository(IConnectionFactory connFactory)
         {
-            _connection = new SQLiteConnection(dbPath);
-            _connection.CreateTable<Item>();
+            _connFactory = connFactory;
+        }
+
+        public void InitialiseDatabase()
+        {
+            using (var connection = _connFactory.CreateSQLiteConnection())
+            {
+                connection.CreateTable<Item>();
+            }
         }
 
         public bool AddItem(Item item, out string errorMsg)
         {
             errorMsg = string.Empty;
 
-            try
+            using (var connection = _connFactory.CreateSQLiteConnection())
             {
-                _connection.Insert(item);
-                return true;
+                try
+                {
+                    connection.Insert(item);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    errorMsg = $"Failed to save new item: {ex.Message}";
+                    return false;
+                }
             }
-            catch (Exception ex)
+        }
+
+        public IEnumerable<Item> AllItems(out string errorMsg)
+        {
+            errorMsg = string.Empty;
+
+            using (var connection = _connFactory.CreateSQLiteConnection())
             {
-                errorMsg = $"Failed to save new item: {ex.Message}";
-                return false;
+                try
+                {
+                    return connection.Table<Item>().ToList();
+                }
+                catch (Exception ex)
+                {
+                    errorMsg = $"Failed to retrieve items: {ex.Message}";
+                    return Enumerable.Empty<Item>();
+                }
             }
         }
     }

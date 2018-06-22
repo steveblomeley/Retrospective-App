@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using Retrospective.Data;
 using Retrospective.Models;
 using Retrospective.Navigation;
 using Xamarin.Forms;
@@ -9,16 +8,26 @@ namespace Retrospective.ViewModels
 {
     public class ItemsViewModel
     {
-        private string _dbFilePath;
+        private readonly IRepository _repository;
 
         public ObservableCollection<Item> Items { get; }
         public Command AddNewItemCommand { get; }
 
-        public ItemsViewModel(IAppNavigation appNavigation, string dbFilePath)
+        public ItemsViewModel(IAppNavigation appNavigation, IRepository repository)
         {
-            _dbFilePath = dbFilePath;
-            Items = new ObservableCollection<Item>();
-            AddNewItemCommand = new Command(async () => await appNavigation.AddNewItem(Items.Add));
+            _repository = repository;
+            var items = _repository.AllItems(out var errorMsg);
+            Items = new ObservableCollection<Item>(items);
+
+            AddNewItemCommand = new Command(async () => await appNavigation.AddNewItem(AddNewItem));
+        }
+
+        private void AddNewItem(Item item)
+        {
+            if (_repository.AddItem(item, out var errorMsg))
+            {
+                Items.Add(item);
+            }
         }
     }
 }
