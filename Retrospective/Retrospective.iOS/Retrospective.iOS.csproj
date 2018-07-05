@@ -147,10 +147,20 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MvvmCross">
+      <Version>6.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmCross.Forms">
+      <Version>6.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.583944" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\Retrospective.Core\Retrospective.Core.csproj">
+      <Project>{b21a2e29-5c7d-4f92-9d5b-c48dcb4bfa5b}</Project>
+      <Name>Retrospective.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Retrospective\Retrospective.csproj">
       <Project>{CE0538C0-4510-44B2-A5EE-838BA93F35CD}</Project>
       <Name>Retrospective</Name>
