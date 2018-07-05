@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Retrospective.Models;
-using Retrospective.Navigation;
-using Xamarin.Forms;
+using MvvmCross.ViewModels;
+using Retrospective.Core.Models;
 
-namespace Retrospective.ViewModels
+namespace Retrospective.Core.ViewModels
 {
-    public class AddItemViewModel
+    public class AddItemViewModel : MvxViewModel
     {
         public string Title { get; set; }
         public string Description { get; set; }

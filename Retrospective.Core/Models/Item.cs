@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace Retrospective.Models
+namespace Retrospective.Core.Models
 {
     [Table("Items")]
     public class Item

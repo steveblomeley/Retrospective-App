@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace Retrospective.Data
+namespace Retrospective.Core.Data
 {
     public interface IConnectionFactory
     {

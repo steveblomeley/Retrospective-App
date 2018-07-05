@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Retrospective.Models;
+using Retrospective.Core.Models;
 
-namespace Retrospective.Data
+namespace Retrospective.Core.Data
 {
     public interface IRepository
     {

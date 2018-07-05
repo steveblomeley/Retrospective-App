@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
+using Retrospective.Core.XPlatform;
 using Retrospective.Droid;
-using Retrospective.XPlatform;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalFilesystemHelper))]
 namespace Retrospective.Droid

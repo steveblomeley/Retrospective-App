@@ -1,4 +1,6 @@
-﻿using MvvmCross.ViewModels;
+﻿using MvvmCross;
+using MvvmCross.ViewModels;
+using Retrospective.Core.Data;
 
 namespace Retrospective.Core
 {
@@ -7,6 +9,8 @@ namespace Retrospective.Core
         public override void Initialize()
         {
             base.Initialize();
+
+            Mvx.RegisterType<IRepository, Repository>();
         }
     }
 }
