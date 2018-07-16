@@ -1,3 +1,4 @@
+using Prism.DryIoc;
 using Retrospective.Data;
 using Retrospective.Views;
 using Retrospective.XPlatform;
@@ -7,7 +8,7 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace Retrospective
 {
-	public partial class App : Application
+	public partial class App : PrismApplication
 	{
 		public App ()
 		{
