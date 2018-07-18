@@ -1,6 +1,6 @@
-using DryIoc;
+using Unity;
 using Prism;
-using Prism.DryIoc;
+using Prism.Unity;
 using Prism.Ioc;
 using Retrospective.Data;
 using Retrospective.Views;
@@ -40,8 +40,8 @@ namespace Retrospective
             //TODO: using: containerRegistry.Register<IFrom, To>();
             //TODO: BUT: We need something like container.Register<IFoo,Foor>().UsingParameter("dbFileName", "Retrospective-App.db3")
             //TODO: ...so that we can pass in the database filename from the application config
-	        var xxx = containerRegistry.GetContainer();
-            xxx.Register<>();
+	        var ctr = containerRegistry.GetContainer();
+	        //ctr.RegisterType<IFrom, To>();
 
             var dbFilePath = DependencyService.Get<ILocalFilesystem>().GetLocalFilePath("Retrospective-App.db3");
 	        var connectionFactory = new SqLiteConnectionFactory(dbFilePath);
