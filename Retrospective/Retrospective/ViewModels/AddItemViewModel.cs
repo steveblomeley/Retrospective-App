@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Prism.Navigation;
+using Prism.Services;
 using Retrospective.Models;
 using Retrospective.Navigation;
 using Xamarin.Forms;
 
 namespace Retrospective.ViewModels
 {
-    public class AddItemViewModel
+    public class AddItemViewModel : ViewModelBase
     {
-        public string Title { get; set; }
         public string Description { get; set; }
 
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
 
-        private readonly INavigation _navigation;
+        private readonly INavigationService _navigationService;
+        private readonly IPageDialogService _pageDialogService;
         private readonly Action<Item> _newitemAction;
-        private readonly IAlertService _alertService;
 
-        public AddItemViewModel(INavigation navigation, Action<Item> newItemAction, IAlertService alertService)
+        public AddItemViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService)
         {
-            _navigation = navigation;
-            _newitemAction = newItemAction;
-            _alertService = alertService;
+            _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
 
             SaveCommand = new Command(async () => await Save());
             CancelCommand = new Command(async () => await Cancel());
@@ -33,7 +33,7 @@ namespace Retrospective.ViewModels
             //TODO: tell user to enter Title before saving
             if (string.IsNullOrWhiteSpace(Title))
             {
-                await _alertService.DisplayAlert("Please enter a Title",
+                await _pageDialogService.DisplayAlertAsync("Please enter a Title",
                     "Please enter a title for this item before saving.", "OK");
 
                 return;
@@ -42,12 +42,19 @@ namespace Retrospective.ViewModels
             var item = new Item { Title = Title.Trim(), Description = Description?.Trim() ?? string.Empty };
             _newitemAction(item);
 
-            await _navigation.PopModalAsync();
+            await _navigationService.GoBackAsync();
         }
 
-        public async Task<Page> Cancel()
+        public async Task Cancel()
         {
-            return await _navigation.PopModalAsync();
+            await _navigationService.GoBackAsync();
+        }
+
+        public override void OnNavigatingTo(NavigationParameters parameters)
+        {
+            base.OnNavigatingTo(parameters);
+
+            //TODO: capture the save new item action here
         }
     }
 }

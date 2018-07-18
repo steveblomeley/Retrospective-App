@@ -6,7 +6,6 @@ using Retrospective.Data;
 using Retrospective.Views;
 using Retrospective.XPlatform;
 using Unity.Injection;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
@@ -38,6 +37,7 @@ namespace Retrospective
 	        containerRegistry.RegisterForNavigation<AddItemPage>();
 
 	        var ctr = containerRegistry.GetContainer();
+
 	        ctr.RegisterType<IConnectionFactory,SqLiteConnectionFactory>(
 	            new InjectionConstructor(
 	                new ResolvedParameter<ILocalFilesystem>(), "Retrospective-App.db3"));
