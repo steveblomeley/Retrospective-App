@@ -5,6 +5,7 @@ using Prism.Ioc;
 using Retrospective.Data;
 using Retrospective.Views;
 using Retrospective.XPlatform;
+using Unity.Injection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,20 +37,11 @@ namespace Retrospective
 	        containerRegistry.RegisterForNavigation<ItemsPage>();
 	        containerRegistry.RegisterForNavigation<AddItemPage>();
 
-            //TODO: Wire in an IoC Container to do this stuff
-            //TODO: using: containerRegistry.Register<IFrom, To>();
-            //TODO: BUT: We need something like container.Register<IFoo,Foor>().UsingParameter("dbFileName", "Retrospective-App.db3")
-            //TODO: ...so that we can pass in the database filename from the application config
 	        var ctr = containerRegistry.GetContainer();
-	        //ctr.RegisterType<IFrom, To>();
-
-            var dbFilePath = DependencyService.Get<ILocalFilesystem>().GetLocalFilePath("Retrospective-App.db3");
-	        var connectionFactory = new SqLiteConnectionFactory(dbFilePath);
-	        var repository = new Repository(connectionFactory);
-
-	        repository.InitialiseDatabase();
-
-	        MainPage = new ItemsPage(repository);
+	        ctr.RegisterType<IConnectionFactory,SqLiteConnectionFactory>(
+	            new InjectionConstructor(
+	                new ResolvedParameter<ILocalFilesystem>(), "Retrospective-App.db3"));
+	        ctr.RegisterType<IRepository, Repository>();
 	    }
     }
 }
