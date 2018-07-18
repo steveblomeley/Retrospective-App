@@ -16,10 +16,11 @@ namespace Retrospective.ViewModels
         public ItemsViewModel(IAppNavigation appNavigation, IRepository repository)
         {
             _repository = repository;
+            AddNewItemCommand = new Command(async () => await appNavigation.AddNewItem(AddNewItem));
+
+            _repository.InitialiseDatabase();
             var items = _repository.AllItems(out var errorMsg);
             Items = new ObservableCollection<Item>(items);
-
-            AddNewItemCommand = new Command(async () => await appNavigation.AddNewItem(AddNewItem));
         }
 
         private void AddNewItem(Item item)
