@@ -8,6 +8,7 @@ namespace Retrospective.Data
     public class Repository : IRepository
     {
         private readonly IConnectionFactory _connFactory;
+        private static bool _initialised = false;
 
         public Repository(IConnectionFactory connFactory)
         {
@@ -16,10 +17,14 @@ namespace Retrospective.Data
 
         public void InitialiseDatabase()
         {
+            if (_initialised) return;
+
             using (var connection = _connFactory.CreateSQLiteConnection())
             {
                 connection.CreateTable<Item>();
             }
+
+            _initialised = true;
         }
 
         public bool AddItem(Item item, out string errorMsg)

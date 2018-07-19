@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Retrospective.XPlatform;
+using SQLite;
 
 namespace Retrospective.Data
 {
@@ -6,9 +7,9 @@ namespace Retrospective.Data
     {
         private readonly string _dbFilePath;
 
-        public SqLiteConnectionFactory(string dbFilePath)
+        public SqLiteConnectionFactory(ILocalFilesystem localFileSystem, string dbFileName)
         {
-            _dbFilePath = dbFilePath;
+            _dbFilePath = localFileSystem.GetLocalFilePath(dbFileName);
         }
 
         public SQLiteConnection CreateSQLiteConnection()

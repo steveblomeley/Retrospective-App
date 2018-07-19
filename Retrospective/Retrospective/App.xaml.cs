@@ -1,42 +1,48 @@
+using Unity;
+using Prism;
+using Prism.Unity;
+using Prism.Ioc;
 using Retrospective.Data;
+using Retrospective.ViewModels;
 using Retrospective.Views;
 using Retrospective.XPlatform;
-using Xamarin.Forms;
+using Unity.Injection;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace Retrospective
 {
-	public partial class App : Application
+	public partial class App : PrismApplication
 	{
-		public App ()
-		{
-			InitializeComponent();
+	    /* 
+         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
+         * This imposes a limitation in which the App class must have a default constructor. 
+         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
+         */
+	    public App() : this(null) { }
 
-            //App composition
-            //TODO: Wire in an IoC Container to do this stuff
-            var dbFilePath = DependencyService.Get<ILocalFilesystem>().GetLocalFilePath("Retrospective-App.db3");
-		    var connectionFactory = new SqLiteConnectionFactory(dbFilePath);
-            var repository = new Repository(connectionFactory);
+	    public App(IPlatformInitializer initializer) : base(initializer) { }
 
-            repository.InitialiseDatabase();
+	    protected override async void OnInitialized()
+        {
+            InitializeComponent();
 
-            MainPage = new ItemsPage(repository);
+            //await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("ItemsPage");
 		}
 
-		protected override void OnStart ()
-		{
-			// Handle when your app starts
-		}
+	    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+	    {
+	        //containerRegistry.RegisterForNavigation<NavigationPage>();
+	        containerRegistry.RegisterForNavigation<ItemsPage,ItemsViewModel>();
+	        containerRegistry.RegisterForNavigation<AddItemPage,AddItemViewModel>();
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+	        var ctr = containerRegistry.GetContainer();
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+	        ctr.RegisterType<IConnectionFactory,SqLiteConnectionFactory>(
+	            new InjectionConstructor(
+	                new ResolvedParameter<ILocalFilesystem>(), "Retrospective-App.db3"));
+	        ctr.RegisterType<IRepository, Repository>();
+	    }
+    }
 }
