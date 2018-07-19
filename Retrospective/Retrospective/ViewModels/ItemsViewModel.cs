@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using Retrospective.Data;
 using Retrospective.Models;
-using Retrospective.Navigation;
 using Xamarin.Forms;
 
 namespace Retrospective.ViewModels
@@ -35,10 +34,10 @@ namespace Retrospective.ViewModels
 
             var addItemPageParameters = new NavigationParameters
             {
-                {"AddItemMethod", saveNewItemAction}
+                {"SaveNewItemAction", saveNewItemAction}
             };
 
-            await _navigationService.NavigateAsync("AddItemPage");
+            await _navigationService.NavigateAsync("AddItemPage", addItemPageParameters);
         }
 
         private void SaveNewItem(Item item)

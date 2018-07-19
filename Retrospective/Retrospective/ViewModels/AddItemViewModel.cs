@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using Prism.Services;
 using Retrospective.Models;
-using Retrospective.Navigation;
 using Xamarin.Forms;
 
 namespace Retrospective.ViewModels
@@ -17,7 +16,7 @@ namespace Retrospective.ViewModels
 
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
-        private readonly Action<Item> _newitemAction;
+        private Action<Item> _saveItemAction;
 
         public AddItemViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService)
         {
@@ -40,7 +39,7 @@ namespace Retrospective.ViewModels
             }
 
             var item = new Item { Title = Title.Trim(), Description = Description?.Trim() ?? string.Empty };
-            _newitemAction(item);
+            _saveItemAction(item);
 
             await _navigationService.GoBackAsync();
         }
@@ -54,7 +53,10 @@ namespace Retrospective.ViewModels
         {
             base.OnNavigatingTo(parameters);
 
-            //TODO: capture the save new item action here
+            if (parameters.TryGetValue<Action<Item>>("SaveNewItemAction", out var saveItemAction))
+            {
+                _saveItemAction = saveItemAction;
+            }
         }
     }
 }

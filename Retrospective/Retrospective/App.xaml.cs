@@ -3,6 +3,7 @@ using Prism;
 using Prism.Unity;
 using Prism.Ioc;
 using Retrospective.Data;
+using Retrospective.ViewModels;
 using Retrospective.Views;
 using Retrospective.XPlatform;
 using Unity.Injection;
@@ -33,8 +34,8 @@ namespace Retrospective
 	    protected override void RegisterTypes(IContainerRegistry containerRegistry)
 	    {
 	        //containerRegistry.RegisterForNavigation<NavigationPage>();
-	        containerRegistry.RegisterForNavigation<ItemsPage>();
-	        containerRegistry.RegisterForNavigation<AddItemPage>();
+	        containerRegistry.RegisterForNavigation<ItemsPage,ItemsViewModel>();
+	        containerRegistry.RegisterForNavigation<AddItemPage,AddItemViewModel>();
 
 	        var ctr = containerRegistry.GetContainer();
 
